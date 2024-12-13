@@ -3,21 +3,25 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from .forms import SignUpForm
+from django.contrib.auth.forms import UserCreationForm
 
 # Sign-up View
 def signup_view(request):
     if request.method == 'POST':
-        form = SignUpForm(request.POST)
+        form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            login(request, user)  # Log in the user after signing up
-            messages.success(request, 'Registration successful!')
-            return redirect('home')  # Redirect to the homepage
+            # Specify the backend explicitly
+            backend = 'django.contrib.auth.backends.ModelBackend'
+            login(request, user, backend=backend)
+            messages.success(request, "Your account has been created successfully!")
+            return redirect('login')  # Redirect to login page after successful signup
         else:
-            messages.error(request, 'Please correct the errors below.')
+            messages.error(request, "Error creating account. Please check the form.")
     else:
-        form = SignUpForm()
-    return render(request, 'auth/signup.html', {'form': form})
+        form = UserCreationForm()
+
+    return render(request, 'portal/register.html', {'form': form})
 
 
 

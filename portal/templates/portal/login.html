@@ -25,36 +25,40 @@
             <div class="login__content">
               <h2 class="text-white mb-65">Welcome Back</h2>
               <div class="form-area login__form">
-                <form action="#0">
-                  <input type="email" placeholder="Email" />
+                <form method="POST" action="/login/">
+                  {% csrf_token %}
+                  <input
+                    type="email"
+                    name="username"
+                    placeholder="Email"
+                    required
+                  />
                   <input
                     class="mt-30"
                     type="password"
+                    name="password"
                     placeholder="Enter Password"
+                    required
                   />
-                  <button class="mt-30">Sign In</button>
-                  <div class="radio-btn mt-30">
-                    <span></span>
-                    <p>I accept your terms & conditions</p>
-                  </div>
+                  <button class="mt-30" type="submit">Sign In</button>
                 </form>
                 <span class="or pt-30 pb-40">OR</span>
               </div>
               <div class="login__with">
-                <a href="#0"
-                  ><img
+                <a href="#0">
+                  <img
                     src="/static/portal/assets/images/icon/google.svg"
                     alt=""
                   />
-                  continue with google</a
-                >
-                <a class="mt-15" href="#0"
-                  ><img
+                  continue with google
+                </a>
+                <a class="mt-15" href="#0">
+                  <img
                     src="/static/portal/assets/images/icon/facebook.svg"
                     alt=""
                   />
-                  continue with facebook</a
-                >
+                  continue with facebook
+                </a>
               </div>
             </div>
           </div>
@@ -62,6 +66,7 @@
       </div>
     </div>
   </section>
+
   <!-- Login area end here -->
 </main>
 
