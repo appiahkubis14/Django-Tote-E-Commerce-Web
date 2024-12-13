@@ -33,9 +33,44 @@ SECRET_KEY = "django-insecure-%bu_y_kl%*u)^i$pkj&1^yisw%99&^n+6)&nzp@+uc_5xdb%7b
 DEBUG = True
 
 ALLOWED_HOSTS = []
+SITE_ID = 1  # Ensure this matches your Django site in the database
+
+LOGIN_REDIRECT_URL = '/'  # Redirect after login
+LOGOUT_REDIRECT_URL = '/'  # Redirect after logout
+ACCOUNT_LOGOUT_REDIRECT_URL = '/'  # Redirect after account logout
+ACCOUNT_SIGNUP_REDIRECT_URL = '/'  # Redirect after signup
+
+ACCOUNT_EMAIL_REQUIRED = True  # Ensure email is required
+ACCOUNT_USERNAME_REQUIRED = True  # Ensure username is required
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'  # Authenticate using both username and email
+SOCIALACCOUNT_QUERY_EMAIL = True  # Query email from the social provider
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",  # React frontend
+    "http://127.0.0.1:3000",
+    "https://your-frontend-domain.com",
+]
 
 
-# Application definition
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOW_METHODS = [
+    "GET",
+    "POST",
+    "PUT",
+    "DELETE",
+    "PATCH",
+]
+
+CORS_ALLOW_HEADERS = [
+    "content-type",
+    "authorization",
+    "x-csrftoken",
+]
+
+
+
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -44,19 +79,26 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    
     "portal",
+    "authentication",
+    "product",
+    
     'django.contrib.humanize',
     'rest_framework',
-    "product",
-    # 'corsheaders',
-    # 'django_filters',
-    # 'drf_yasg',
-    # 'django_extensions',
-    # 'storages',
-    # 'djangorestframework'
+    'django.contrib.sites',  # Required by allauth
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.facebook',
+    'corsheaders',
+
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',  # Must be at the top
+    'django.middleware.common.CommonMiddleware',
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -64,6 +106,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "allauth.account.middleware.AccountMiddleware"
 ]
 
 ROOT_URLCONF = "e_commrce.urls"
@@ -83,6 +126,12 @@ TEMPLATES = [
         },
     },
 ]
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
 
 
 DATABASES = {

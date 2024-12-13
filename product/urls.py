@@ -1,5 +1,9 @@
 from django.urls import path
 from . import views
+from django.conf import settings
+from django.conf.urls.static import static
+
+
 
 urlpatterns = [
     # Product URLs
@@ -18,4 +22,9 @@ urlpatterns = [
     # Order URLs
     path('orders/', views.fetch_user_orders, name='fetch_user_orders'),
     path('orders/create/', views.create_order, name='create_order'),
+
+    path('categories/',views.get_categories, name='get_categories'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
