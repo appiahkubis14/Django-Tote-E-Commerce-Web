@@ -32,7 +32,7 @@ SECRET_KEY = "django-insecure-%bu_y_kl%*u)^i$pkj&1^yisw%99&^n+6)&nzp@+uc_5xdb%7b
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 SITE_ID = 1  # Ensure this matches your Django site in the database
 
 LOGIN_REDIRECT_URL = '/'  # Redirect after login

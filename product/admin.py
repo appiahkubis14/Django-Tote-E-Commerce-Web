@@ -6,7 +6,7 @@ from .models import ProductCategory
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('name', 'new_price', 'old_price', 'rate', 'image_preview')  # Fields to display in the list view
+    list_display = ('name', 'new_price', 'old_price', 'rate', 'image_preview','description')  # Fields to display in the list view
     search_fields = ('name',)                                 # Enable search by name
     list_filter = ('rate',)                                   # Add filter by rate
     ordering = ('name',)                                      # Default ordering by name

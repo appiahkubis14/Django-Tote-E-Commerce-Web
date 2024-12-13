@@ -16,6 +16,7 @@ class Product(models.Model):
     image = models.ImageField(upload_to='products/', validators=[validate_image_format])
     new_price = models.DecimalField(max_digits=10, decimal_places=2)
     old_price = models.DecimalField(max_digits=10, decimal_places=2)
+    description = models.TextField(blank=True, null=True)
     rate = models.DecimalField(max_digits=3, decimal_places=2)
 
     def __str__(self):
