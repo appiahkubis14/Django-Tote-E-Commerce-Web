@@ -106,7 +106,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "allauth.account.middleware.AccountMiddleware"
+    "allauth.account.middleware.AccountMiddleware",
+    # 'product.middleware.CrossOriginOpenerPolicyMiddleware'
 ]
 
 ROOT_URLCONF = "e_commrce.urls"
