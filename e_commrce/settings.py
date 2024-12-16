@@ -69,9 +69,6 @@ CORS_ALLOW_HEADERS = [
     "x-csrftoken",
 ]
 
-
-
-
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -83,6 +80,8 @@ INSTALLED_APPS = [
     "portal",
     "authentication",
     "product",
+    "category",
+    "store",
     
     'django.contrib.humanize',
     'rest_framework',
@@ -93,7 +92,6 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.facebook',
     'corsheaders',
-
 ]
 
 MIDDLEWARE = [
@@ -123,6 +121,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                # "category.context_processors.menu_links"
             ],
         },
     },
@@ -147,6 +146,7 @@ DATABASES = {
 }
 
 WSGI_APPLICATION = "e_commrce.wsgi.application"
+AUTH_USER_MODEL = 'authentication.Account'
 
 
 # Database

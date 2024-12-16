@@ -24,9 +24,6 @@ def signup_view(request):
     return render(request, 'portal/register.html', {'form': form})
 
 
-
-
-
 # Login View
 def login_view(request):
     if request.method == 'POST':
@@ -40,7 +37,8 @@ def login_view(request):
             messages.error(request, 'Invalid username or password.')
     else:
         form = AuthenticationForm()
-    return render(request, 'auth/login.html', {'form': form})
+    return render(request, 'portal/login.html', {'form': form})
+
 
 # Logout View
 def logout_view(request):
