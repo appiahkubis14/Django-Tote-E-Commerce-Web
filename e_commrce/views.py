@@ -2,16 +2,12 @@ from django.shortcuts import render
 from store.models import Store
 
 def index(request):
-    products = StoreModel.objects.all().filter(is_available=True)
-    context = {
-        'products': products,
-    }
-    return render(request, 'portal/index.html', context)
+    products = Store.objects.all().filter(is_available=True)
+    
+    return render(request, 'portal/index.html', locals())
 
 
 def shop(request):
-    products = StoreModel.objects.all().filter(is_available=True)
-    context = {
-        'products': products,
-    }
-    return render(request, 'portal/shop.html',context)
+    products = Store.objects.all().filter(is_available=True)
+    
+    return render(request, 'portal/shop.html',locals())

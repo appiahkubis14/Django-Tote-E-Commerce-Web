@@ -14,6 +14,7 @@ class Category(models.Model):
     slug = models.SlugField(max_length=100, unique=True, blank=True)
     description = models.CharField(max_length=255)
     image = models.ImageField(upload_to='images/category/', blank=True, null=True,validators=[validate_image_format])
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
         return self.category_name

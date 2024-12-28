@@ -11,3 +11,4 @@ class AccountAdmin(admin.ModelAdmin):
     readonly_fields = ('date_joined', 'last_login','password','is_admin', 'is_staff', 'is_active', 'is_superadmin')
 
 admin.site.register(Account,AccountAdmin)
+

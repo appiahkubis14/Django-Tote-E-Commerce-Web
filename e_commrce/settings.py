@@ -34,6 +34,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 SITE_ID = 1  # Ensure this matches your Django site in the database
+LOGIN_URL = '/login/'  # Adjust to your login URL
+
 
 LOGIN_REDIRECT_URL = '/'  # Redirect after login
 LOGOUT_REDIRECT_URL = '/'  # Redirect after logout
@@ -45,10 +47,14 @@ ACCOUNT_USERNAME_REQUIRED = True  # Ensure username is required
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'  # Authenticate using both username and email
 SOCIALACCOUNT_QUERY_EMAIL = True  # Query email from the social provider
 
+PAYSTACK_SECRET_KEY = os.getenv('PAYSTACK_SECRET_KEY')
+PAYSTACK_PUBLIC_KEY = os.getenv('PAYSTACK_PUBLIC_KEY')
+
+
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",  # React frontend
-    "http://127.0.0.1:3000",
-    "https://your-frontend-domain.com",
+    # "http://localhost:3000",  # React frontend
+    # "http://127.0.0.1:3000",
+    # "https://your-frontend-domain.com",
 ]
 
 
@@ -79,13 +85,13 @@ INSTALLED_APPS = [
     
     "portal",
     "authentication",
-    "product",
+    # "product",
     "category",
     "store",
     
     'django.contrib.humanize',
     'rest_framework',
-    'django.contrib.sites',  # Required by allauth
+    'django.contrib.sites',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',

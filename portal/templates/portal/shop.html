@@ -1,15 +1,15 @@
-{%extends 'portal/base.html'%} {%block content%}
+{% extends 'portal/base.html' %}
+
+{% block content %}
 
 <main>
   <section class="product-area pt-130 pb-130">
     <div class="container">
-      <div
-        class="pb-20 bor-bottom shop-page-wrp d-flex justify-content-between align-items-center mb-65"
-      >
-        <p class="fw-600">Showing 1–12 of 17 results</p>
+      <div class="pb-20 bor-bottom shop-page-wrp d-flex justify-content-between align-items-center mb-65">
+        <p class="fw-600">Showing {{ products.start_index }}–{{ products.end_index }} of {{ products.paginator.count }} results</p>
         <div class="short">
           <select name="shortList" id="shortList">
-            <option value="0">Short by popularity</option>
+            <option value="0">Sort by popularity</option>
             <option value="1">Totebag</option>
             <option value="2">Dual Totebag</option>
             <option value="3">Art</option>
@@ -17,21 +17,17 @@
           </select>
         </div>
       </div>
+
       <div class="row g-4">
         <div class="col-xl-3 col-lg-4">
           <div class="product__left-item sub-bg">
             <h4 class="mb-30 left-title">Special Offer</h4>
             <div class="image mb-30">
-              <img
-                src="/static/portal/assets/images/coundown/coundown-1.jpg"
-                alt="image"
-              />
+              <img src="/static/portal/assets/images/coundown/coundown-1.jpg" alt="Special Offer" />
             </div>
             <div class="product__content p-0">
               <h4 class="mb-15">
-                <a class="primary-hover" href="shop-single.html"
-                  >Classic Canvas Tote Bag</a
-                >
+                <a class="primary-hover" href="shop-single.html">Classic Canvas Tote Bag</a>
               </h4>
               <del>₵39.99</del><span class="primary-color ml-10">₵29.99</span>
               <div class="star mt-20">
@@ -42,17 +38,13 @@
                 <i class="fa-solid fa-star"></i>
               </div>
             </div>
+            <!-- Second special offer -->
             <div class="image pt-40 mb-30 bor-top mt-40">
-              <img
-                src="/static/portal/assets/images/coundown/coundown-2.jpg"
-                alt="image"
-              />
+              <img src="/static/portal/assets/images/coundown/coundown-2.jpg" alt="Special Offer" />
             </div>
             <div class="product__content p-0">
               <h4 class="mb-15">
-                <a class="primary-hover" href="shop-single.html"
-                  >Leather Tote Bag</a
-                >
+                <a class="primary-hover" href="shop-single.html">Leather Tote Bag</a>
               </h4>
               <del>₵59.99</del><span class="primary-color ml-10">₵39.99</span>
               <div class="star mt-20">
@@ -63,86 +55,79 @@
                 <i class="fa-solid fa-star"></i>
               </div>
             </div>
-            <div class="product__coundown pt-30 bor-top mt-40">
+            <!-- <div class="product__coundown pt-30 bor-top mt-40">
               <h4>Hurry Up!</h4>
-              <span>offer ends in</span>
+              <span>Offer ends in</span>
               <div class="d-flex align-items-center gap-3 flex-wrap mt-25">
                 <div class="coundown-item">
-                  <span id="day"></span>
+                  <span id="day">0</span>
                   <h6>Day</h6>
                 </div>
                 <div class="coundown-item">
-                  <span id="hour"></span>
-                  <h6>hour</h6>
+                  <span id="hour">0</span>
+                  <h6>Hour</h6>
                 </div>
                 <div class="coundown-item">
-                  <span id="min"></span>
-                  <h6>min</h6>
+                  <span id="min">0</span>
+                  <h6>Min</h6>
                 </div>
                 <div class="coundown-item">
-                  <span id="sec"></span>
+                  <span id="sec">0</span>
                   <h6>Sec</h6>
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
 
         <div class="col-xl-9 col-lg-8" id="productList">
           <div class="row g-4">
+            {% for product in products %}
             <div class="col-xl-4 col-lg-6 col-md-6">
               <div class="product__item bor">
-                <a href="#0" class="wishlist"
-                  ><i class="fa-regular fa-heart"></i
-                ></a>
-                <a href="shop-single.html" class="product__image pt-20 d-block">
-                  <img
-                    class="font-image"
-                    src="/static/portal/assets/images/product/product-image1.png"
-                    alt="image"
-                  />
-                  <img
-                    class="back-image"
-                    src="/static/portal/assets/images/product/product-image3.png"
-                    alt="image"
-                  />
+                <a href="#0" class="wishlist">
+                  <i class="fa-regular fa-heart"></i>
+                </a>
+                <a href="" class="product__image pt-20 d-block">
+                  <img class="font-image" src="{{ product.image.url }}" alt="{{ product.name }}" />
+                  <img class="back-image" src="{{ product.image.url }}" alt="{{ product.name }}" />
                 </a>
                 <div class="product__content">
                   <h4 class="mb-15">
-                    <a class="primary-hover" href="shop-single.html"
-                      >Menthol E-Cigarette Kit</a
-                    >
+                    <a class="primary-hover" href="">
+                      {{ product.name }}
+                    </a>
                   </h4>
-                  <del>₵74.50</del
-                  ><span class="primary-color ml-10">₵49.50</span>
+                  {% if product.old_price %}
+                  <del>₵{{ product.old_price }}</del>
+                  {% endif %}
+                  <span class="primary-color ml-10">₵{{ product.new_price }}</span>
                   <div class="star mt-20">
+                    {% for i in "12345"|slice:":product.rate"|default:"" %}
                     <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
+                    {% endfor %}
                   </div>
                 </div>
-                <a
-                  class="product__cart d-block bor-top"
-                  href="#0"
-                  data-product-id="{{ product.id }}"
-                  ><i
-                    class="fa-regular fa-cart-shopping primary-color me-1"
-                  ></i>
+                <a href="{% url 'add_to_cart' product.id %}" class="product__cart d-block bor-top">
+                  <i class="fa-regular fa-cart-shopping primary-color me-1"></i>
                   <span>Add to cart</span>
                 </a>
+                
               </div>
             </div>
+            {% empty %}
+            <p>No products available at the moment.</p>
+            {% endfor %}
           </div>
+
           <div class="pagi-wrp mt-65">
             <a href="#0" class="pagi-btn">01</a>
             <a href="#0" class="pagi-btn active">02</a>
             <a href="#0" class="pagi-btn">03</a>
             <a
               href="#0"
-              class="fa-regular ms-2 primary-hover fa-angle-right"
-            ></a>
+              class="fa-regular ms-2 primary-hover fa-angle-right">
+            </a>
           </div>
         </div>
       </div>
@@ -150,4 +135,4 @@
   </section>
 </main>
 
-{%endblock%}
+{% endblock %}

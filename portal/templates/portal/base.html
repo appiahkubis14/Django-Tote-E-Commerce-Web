@@ -63,23 +63,10 @@
                 <i class="fa-regular fa-cart-shopping"></i>
               </span>
               <a href="#0" class="c__one">
-                <span> ₵0.00 </span>
+                <span>₵{{ total_price }} </span>  <!-- Display total price -->
               </a>
-              <span class="one"> 0 </span>
+              <span class="one"> {{ total_items }} </span>  <!-- Display total items -->
             </div>
-            {% comment %}
-            <div class="flag__wrap">
-              <div class="flag">
-                <img src="assets/images/flag/us.png" alt="flag" />
-              </div>
-              <select name="flag">
-                <option value="0">Usa</option>
-                <option value="1">Canada</option>
-                <option value="2">Australia</option>
-                <option value="3">Germany</option>
-              </select>
-            </div>
-            {% endcomment %}
           </div>
         </div>
       </div>
@@ -110,14 +97,7 @@
                 <li class="subtwohober">
                   <a href="/shop/"> Shop Now </a>
                 </li>
-                {% comment %}
-                <li class="subtwohober">
-                  <a href="shop-2/"> Shop Rightbar </a>
-                </li>
-                {% endcomment %}
-                <li class="subtwohober">
-                  <a href="/shop-single/"> Shop Single </a>
-                </li>
+               
                 <li class="subtwohober">
                   <a href="/cart/"> Cart </a>
                 </li>
@@ -150,7 +130,7 @@
                   alt="image"
                 />
               </div>
-              <div class="content">
+              <!-- <div class="content">
                 <p>Picking up?</p>
                 <div class="items">
                   <select class="form__select p-0">
@@ -160,7 +140,7 @@
                     <option value="3">Store Three</option>
                   </select>
                 </div>
-              </div>
+              </div> -->
             </div>
             <div class="menu__right d-flex align-items-center">
               <div class="thumb">
