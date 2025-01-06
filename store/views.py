@@ -10,6 +10,115 @@ from django.http import Http404
 import logging
 logger = logging.getLogger(__name__)
 
+from django.shortcuts import render, redirect, HttpResponseRedirect 
+from django.contrib.auth.hashers import check_password ,make_password
+from .models import Customer 
+from django.views import View 
+from django.contrib.auth import authenticate, login
+
+class Signup(View):
+    def get(self, request):
+        return render(request, 'portal/register.html')
+
+    def post(self, request):
+        postData = request.POST
+        first_name = postData.get('first_name')
+        last_name = postData.get('last_name')
+        phone = postData.get('phone_number')
+        email = postData.get('email')
+        password1 = postData.get('password1')
+        password2 = postData.get('password2')
+
+        # Form validation
+        error_message = self.validateCustomer(first_name, last_name, phone, email, password1, password2)
+
+        if not error_message:
+            # Save customer if no errors
+            customer = Customer(
+                first_name=first_name,
+                last_name=last_name,
+                phone=phone,
+                email=email,
+                password=make_password(password1)
+            )
+            customer.save()
+            return redirect('login')  # Redirect to login after successful registration
+        else:
+            data = {
+                'error': error_message,
+                'first_name': first_name,
+                'last_name': last_name,
+                'phone': phone,
+                'email': email
+            }
+            return render(request, 'portal/register.html', data)
+
+    def validateCustomer(self, first_name, last_name, phone, email, password1, password2):
+        error_message = None
+        if not first_name:
+            error_message = "Please enter your First Name!"
+        elif len(first_name) < 3:
+            error_message = 'First Name must be at least 3 characters long.'
+        elif not last_name:
+            error_message = 'Please enter your Last Name!'
+        elif len(last_name) < 3:
+            error_message = 'Last Name must be at least 3 characters long.'
+        elif not phone:
+            error_message = 'Please enter your Phone Number!'
+        elif len(phone) < 10:
+            error_message = 'Phone Number must be at least 10 digits long.'
+        elif not email:
+            error_message = 'Please enter your Email Address!'
+        elif len(email) < 5:
+            error_message = 'Email must be at least 5 characters long.'
+        elif password1 != password2:
+            error_message = 'Passwords do not match!'
+        elif len(password1) < 5:
+            error_message = 'Password must be at least 5 characters long.'
+        elif Customer.objects.filter(email=email).exists():
+            error_message = 'Email Address already registered.'
+        return error_message
+
+
+class Login(View):
+    return_url = None
+
+    def get(self, request):
+        # Get the return URL if it exists
+        Login.return_url = request.GET.get('return_url')
+        return render(request, 'portal/login.html')
+
+    def post(self, request):
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        error_message = None
+
+        # Authenticate user
+        customer = authenticate(request, username=email, password=password)
+
+        if customer:
+            # Log the user in and set session variables
+            login(request, customer)
+            request.session['customer'] = customer.id
+            request.session['customer_first_name'] = customer.first_name
+
+            if Login.return_url:
+                return HttpResponseRedirect(Login.return_url)
+            else:
+                Login.return_url = None
+                return redirect('homepage')
+        else:
+            error_message = 'Invalid email or password!'
+
+        return render(request, 'portal/login.html', {'error': error_message})
+
+
+def logout(request): 
+	request.session.clear() 
+	return redirect('login') 
+
+
+
 def index(request):
     products = Store.objects.filter(is_available=True)
     return render(request, 'portal/index.html', locals())
@@ -248,7 +357,6 @@ def process_order(request):
     if request.method == 'POST':
         data = json.loads(request.body)
         reference = data.get('reference')
-        
         # Verify payment
         url = f'https://api.paystack.co/transaction/verify/{reference}'
         headers = {
@@ -268,14 +376,12 @@ def process_order(request):
                         'address': data.get('address'),
                     }
                 )
-
                 # Save order
                 order = Order.objects.create(
                     customer=customer,
                     total_price=data.get('total_price'),
                     reference=reference
                 )
-
                 # Save order items
                 for item in data.get('items', []):
                     OrderItem.objects.create(
@@ -286,9 +392,7 @@ def process_order(request):
                     )
                 
                 return JsonResponse({'status': 'success'})
-        
         return JsonResponse({'status': 'failed', 'message': 'Payment verification failed'}, status=400)
-
     return JsonResponse({'error': 'Invalid request'}, status=400)
 
 
@@ -302,13 +406,13 @@ def shop_single(request):
     return render(request, 'portal/shop-single.html', locals())
 
 
-def register(request):
+# def register(request):
     
-    return render(request, 'portal/register.html', locals())
+#     return render(request, 'portal/register.html', locals())
 
 
-def login(request):
-    return render(request, 'portal/login.html', locals())
+# def login(request):
+#     return render(request, 'portal/login.html', locals())
 
 
 def blog(request):

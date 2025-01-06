@@ -47,14 +47,11 @@ ACCOUNT_USERNAME_REQUIRED = True  # Ensure username is required
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'  # Authenticate using both username and email
 SOCIALACCOUNT_QUERY_EMAIL = True  # Query email from the social provider
 
-PAYSTACK_SECRET_KEY = os.getenv('PAYSTACK_SECRET_KEY')
-PAYSTACK_PUBLIC_KEY = os.getenv('PAYSTACK_PUBLIC_KEY')
+PAYSTACK_SECRET_KEY = ''
 
 
 CORS_ALLOWED_ORIGINS = [
-    # "http://localhost:3000",  # React frontend
-    # "http://127.0.0.1:3000",
-    # "https://your-frontend-domain.com",
+
 ]
 
 
@@ -84,9 +81,9 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     
     "portal",
-    "authentication",
+    # "authentication",
     # "product",
-    "category",
+    # "category",
     "store",
     
     'django.contrib.humanize',
@@ -100,6 +97,22 @@ INSTALLED_APPS = [
     'corsheaders',
 ]
 
+INSTALLED_APPS += [
+    'rest_framework_simplejwt.token_blacklist',
+]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+
+SIMPLE_JWT = {
+    'ROTATE_REFRESH_TOKENS': True,
+    'BLACKLIST_AFTER_ROTATION': True,
+}
+
+
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',  # Must be at the top
     'django.middleware.common.CommonMiddleware',
@@ -111,7 +124,8 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "allauth.account.middleware.AccountMiddleware",
-    # 'product.middleware.CrossOriginOpenerPolicyMiddleware'
+    'store.CustomerMiddleware.CustomerMiddleware'
+
 ]
 
 ROOT_URLCONF = "e_commrce.urls"
@@ -127,18 +141,17 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                # "category.context_processors.menu_links"
+                
             ],
         },
     },
 ]
 
 AUTHENTICATION_BACKENDS = [
+    # 'authentication.backends.EmailBackend',
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
-
-
 
 DATABASES = {
     'default': {
@@ -152,22 +165,9 @@ DATABASES = {
 }
 
 WSGI_APPLICATION = "e_commrce.wsgi.application"
-AUTH_USER_MODEL = 'authentication.Account'
+# settings.py
+AUTH_USER_MODEL = 'store.Customer'  # Adjust 'aujthentication' if necessary
 
-
-# Database
-# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.sqlite3",
-#         "NAME": BASE_DIR / "db.sqlite3",
-#     }
-# }
-
-
-# Password validation
-# https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -183,7 +183,6 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
@@ -210,3 +209,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+

@@ -5,8 +5,8 @@ from .views import (
     index,
     about,
     shop_single,
-    register,
-    login,
+    # register,
+    Login,
     blog,
     contact,
     view_cart,
@@ -17,7 +17,8 @@ from .views import (
     process_payment,
     verify_payment,
     process_order,
-    base
+    base,
+    Signup
 )
 
 urlpatterns = [
@@ -28,9 +29,9 @@ urlpatterns = [
 
     path('shop-single/', shop_single, name='shop_single'),  # Single product page
 
-    path('register/', register, name='register'),  # Register page
+    path('register/', Signup.as_view(), name='register'),  # Register page
 
-    path('login/', login, name='login'),  # Login page
+    path('login/', Login.as_view(), name='login'),  # Login page
 
     path('blog/', blog, name='blog'),  # Blog page
     

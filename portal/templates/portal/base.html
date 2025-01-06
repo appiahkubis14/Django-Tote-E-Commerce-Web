@@ -2,27 +2,25 @@
 
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+  <<head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Odor - Vape Store WooCommerce HTML Template</title>
+    <title>Gbeke</title>
     <!-- Favicon img -->
-    <link rel="shortcut icon" href="/static/portal/assets/images/favicon.png" />
-    <!-- Bootstarp min css -->
+    <link rel="icon" type="image/png" href="/static/portal/assets/images/favicons/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/static/portal/assets/images/favicons/favicon.svg" />
+    <link rel="shortcut icon" href="/static/portal/assets/images/favicons/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/portal/assets/images/favicons/apple-touch-icon.png" />
+    <link rel="manifest" href="/static/portal/assets/images/favicons/site.webmanifest" />
+  
     <link rel="stylesheet" href="/static/portal/assets/css/bootstrap.min.css" />
     <!-- All min css -->
     <link rel="stylesheet" href="/static/portal/assets/css/all.min.css" />
     <!-- Swiper bundle min css -->
-    <link
-      rel="stylesheet"
-      href="/static/portal/assets/css/swiper-bundle.min.css"
-    />
+    <link rel="stylesheet" href="/static/portal/assets/css/swiper-bundle.min.css" />
     <!-- Magnigic popup css -->
-    <link
-      rel="stylesheet"
-      href="/static/portal/assets/css/magnific-popup.css"
-    />
+    <link rel="stylesheet" href="/static/portal/assets/css/magnific-popup.css" />
     <!-- Animate css -->
     <link rel="stylesheet" href="/static/portal/assets/css/animate.css" />
     <!-- Nice select css -->
@@ -30,6 +28,7 @@
     <!-- Style css -->
     <link rel="stylesheet" href="/static/portal/assets/css/style.css" />
   </head>
+  
 
   <body>
     <!-- Header area start here -->
@@ -48,7 +47,7 @@
             <button><i class="fa-solid fa-search"></i></button>
           </div>
           <div class="account__wrap">
-            <div class="account d-flex align-items-center">
+            <!-- <div class="account d-flex align-items-center">
               <div class="user__icon">
                 <a href="#0">
                   <i class="fa-regular fa-user"></i>
@@ -57,7 +56,7 @@
               <a href="#0" class="acc__cont">
                 <span> My Account </span>
               </a>
-            </div>
+            </div> -->
             <div class="cart d-flex align-items-center">
               <span class="cart__icon">
                 <i class="fa-regular fa-cart-shopping"></i>
@@ -67,6 +66,21 @@
               </a>
               <span class="one"> {{ total_items }} </span>  <!-- Display total items -->
             </div>
+            <div class="account d-flex align-items-center">
+              <div class="user__icon">
+                  <a href="#">
+                      <i class="fa-regular fa-user"></i>
+                  </a>
+              </div>
+              <a href="#" class="acc__cont">
+                  {% if request.session.customer_first_name %}
+                      <span class="welcome__text">Welcome, {{ request.session.customer_first_name }}</span>
+                  {% else %}
+                      <span class="account__text">My Account</span>
+                  {% endif %}
+              </a>
+          </div>
+          
           </div>
         </div>
       </div>
@@ -124,12 +138,12 @@
           </ul>
           <div class="shipping__item d-none d-sm-flex align-items-center">
             <div class="menu__right d-flex align-items-center">
-              <div class="thumb">
+              <!-- <div class="thumb">
                 <img
                   src="/static/portal/assets/images/flag/picking.png"
                   alt="image"
                 />
-              </div>
+              </div> -->
               <!-- <div class="content">
                 <p>Picking up?</p>
                 <div class="items">

@@ -8,8 +8,8 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path('portal/', include("portal.urls")),
     path('', include('store.urls')),
-    path('category/',include('category.urls')),
+    # path('category/',include('category.urls')),
     path('accounts/', include('allauth.urls')),
-    path('auth/', include('authentication.urls')),
+    # path('', include('authentication.urls')),
     
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) 
